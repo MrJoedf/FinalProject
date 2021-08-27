@@ -143,7 +143,7 @@ const Hero = (props) => {
                     //runs profile page
             <section className="hero">
                 <nav>
-                    <h2>Welcome, {welcome}</h2>
+                    <h2>Welcome{welcome}</h2>
                     <Button className="midButton" onClick={() => setCount(!count)}>
                         Fuel Form
                     </Button>
