@@ -58,11 +58,12 @@ const Hero = (props) => {
 
         //get address from database
     
- 
+        if(isClient){
             nameRef.on('value', function(snapshot){
                 userAddress = (Object.values(snapshot.child('Info').val())[0]);
-                setWelcome((Object.values(snapshot.child('Info').val())[3]).split(' ')[0]);
+                setWelcome(', '+(Object.values(snapshot.child('Info').val())[3]).split(' ')[0]);
             })
+        }
     })
 
     //pushes profile contact info to the firebase database
@@ -98,7 +99,7 @@ const Hero = (props) => {
                 //runs fuel page
             <section className="hero"> 
                 <nav>
-                    <h2>Welcome, {welcome}</h2>
+                    <h2>Welcome{welcome}</h2>
                     <Button className="midButton" onClick = {goBack}>Back</Button>
                     <Button className="logoutButt" //logout button
                     onClick={handleLogout}>Log Out</Button>
