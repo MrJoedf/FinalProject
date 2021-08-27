@@ -246,7 +246,7 @@ const FuelForm = (props) => {
                     </div>
             <div className="form-group">
                     <div className="pricepops">
-                    <h5 style={{fontWeight: "bold"}} >{(toggleQuote) ? "Suggested price: "+marginPrice +" per gallon": ''}</h5>
+                    <h5 style={{fontWeight: "bold"}} >{(toggleQuote) ? "Suggested price: $"+marginPrice +" per gallon": ''}</h5>
                     <h5 style={{fontWeight: "bold"}} >{(toggleQuote) ? "Total amount: $"+ (marginPrice*values.gallon_requested).toFixed(2) : ''}</h5>
                     </div>
                     <div className="quotebtn">
