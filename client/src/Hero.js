@@ -58,12 +58,10 @@ const Hero = (props) => {
 
         //get address from database
     
-        if(isClient){
             nameRef.on('value', function(snapshot){
                 userAddress = (Object.values(snapshot.child('Info').val())[0]);
                 setWelcome(', '+(Object.values(snapshot.child('Info').val())[3]).split(' ')[0]);
             })
-        }
     })
 
     //pushes profile contact info to the firebase database
