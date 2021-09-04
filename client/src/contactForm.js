@@ -36,6 +36,8 @@ const ContactForm = (props) => {
     const [stateError, setStateError] = useState('');
     const [zipcodeError, setZipcodeError] = useState('');
     const [address2Error, setAddress2Error] = useState('');
+    const [emptyVals, setEmptyVals] = useState(true);
+
 
     const clearErrors = () => {
         setNameError('');
@@ -47,9 +49,10 @@ const ContactForm = (props) => {
       }
 
     var [values, setValues] = useState(initialFieldValues);
-
+      
     //if no input yet set to empty, else set values to user inputs
     useEffect(() => {
+        
         try {
             if (props.currentId == '')
                 setValues({ ...initialFieldValues })
@@ -57,21 +60,28 @@ const ContactForm = (props) => {
                 setValues({
                     ...props.contactObjects[props.currentId]
                 })
+                
+                
         } catch(error) {}
     }, [props.currentId, props.contactObjects])
 
     //save user inputs to values to save to firebase
     const handleInputChange = e => {
         var { name, value } = e.target;
+
         setValues({
             ...values,
             [name]: value
         })
+
+        setEmptyVals(Object.values(values).every(x => x === null || x === ''));
+       
     }
 
     //input validations for profile page
     function handleValidation (values){
-       
+        
+       if(props.currentId=='null'){
         //let fields caused an issue with refreshing and not inputting data
         //let fields = this.values.fields;
         let errors = {};
@@ -212,7 +222,8 @@ const ContactForm = (props) => {
             setZipcodeError("Zipcode must be in format 00000 or 00000-0000");
         }
     }
-       return (formIsValid);
+       return (formIsValid);}
+       return true;
    }
 
    //submitting form to firebase and prevent page refresh
@@ -222,6 +233,7 @@ const ContactForm = (props) => {
 
         if(handleValidation(values)){
             props.addOrEdit(values);
+            setEmptyVals(true);
         }
         try{
             expect(() =>{ handleValidation(fakeUser2); }).toThrow(Error);
@@ -300,7 +312,10 @@ const ContactForm = (props) => {
                 <select className="form-control" name="state" onClick={clearErrors}
                     value={values.state}
                     //pull down option for state
-                    onChange={handleInputChange}>
+                
+                    onChange={handleInputChange}
+                
+                    >
                         <option value="DEFAULT">Select your state</option>
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
@@ -373,7 +388,7 @@ const ContactForm = (props) => {
             <div className="form-group">
                 <div className="savebtn">
                 <input //save button
-                type="submit" disabled={!values.address} value={props.currentId == "" ? "Save" : "Update"} className="btn btn-primary btn-block" />
+                type="submit" disabled={emptyVals} value={props.currentId == "" ? "Save" : "Update"} className="btn btn-primary btn-block" />
                 </div>
                 </div>
             </section>

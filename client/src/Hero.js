@@ -57,12 +57,26 @@ const Hero = (props) => {
         const nameRef = queryRef.orderByKey();
 
         //get address from database
-    
+        
             nameRef.on('value', function(snapshot){
+                if(snapshot.hasChild('Info')){
                 userAddress = (Object.values(snapshot.child('Info').val())[0]);
-                setWelcome(', '+(Object.values(snapshot.child('Info').val())[3]).split(' ')[0]);
+                setWelcome(', '+(Object.values(snapshot.child('Info').val())[3]).split(' ')[0]);}
             })
     })
+
+    useEffect(() => {
+        const checkRef = fire.database().ref('Users/'+userID);
+        try {
+            checkRef.on('value', function(snapshot){
+                if(snapshot.hasChild('Info')){
+                    setCurrentId(fire.auth().currentUser.uid);
+                    
+                }})}
+            catch{}}
+    )
+
+   
 
     //pushes profile contact info to the firebase database
     const addOrEdit = (...obj) => {
