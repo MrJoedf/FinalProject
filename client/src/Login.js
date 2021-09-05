@@ -29,7 +29,23 @@ const Login = (props) => {
                 <input className="email" type="text" onClick = {clearErrors} autoFocus required value={email} onChange={(e) => setEmail(e.target.value)} />
                 <p className="errorMsg">{emailError}</p>
                 <label>Password</label>
-                <input className="password" type="password" required value = {password} onChange={(e) => setPassword(e.target.value)} />
+                <input className="password" type="password" required value = {password} 
+                
+                    onChange={(e) => setPassword(e.target.value)} 
+
+                    onKeyPress={e => {
+                            
+                        if (e.key === 'Enter') {
+                           {hasAccount ?
+                                handleLogin()
+                                :
+                                handleSignup();
+                            }
+                        }
+                    }
+                }   
+                
+                />
                 <p className="errorMsg">{passwordError}</p>
                 <div className="btnContainer">
                     {hasAccount ? (
